@@ -218,7 +218,7 @@ void loop() {
     digitalWrite(ledvermPin,HIGH);
     digitalWrite(ledverdPin,HIGH);
     lcd.setCursor(4, 1);
-    lcd.print("ABERTO");
+    lcd.print("ABERTO ");
     delay(500);
     rolarPararMeio();
     Serial.println("A porta esta fechada");
@@ -229,7 +229,7 @@ void loop() {
     digitalWrite(ledverdPin,HIGH);
     digitalWrite(ledvermPin,LOW);
     lcd.setCursor(4, 1);
-    lcd.print("ABERTO");
+    lcd.print("ABERTO ");
     delay(500);
     rolarPararMeio();
     Serial.println("A porta esta aberta");
