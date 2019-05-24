@@ -1,13 +1,17 @@
+//Inclui biblioteca para lcd
 #include <LiquidCrystal.h>
 
+//Estabelece os pinos do lcd a serem conectados ao arduino
 LiquidCrystal lcd(12, 11, 10, 9, 8, 7);
 
-int ledverdPin = 13; //Led no pino 13
+int ledverdPin = 13; //Led verde no pino 13
 int ldrPin = 0; //LDR no pino analígico A0
 int ldrValor = 0; //Valor lido do LDR
-int laserPin = 2;
-int ledvermPin = 4;
-/*
+int laserPin = 2; //Led laser sempre high
+int ledvermPin = 4; //Led vermelho
+
+/*  Cria caracteres especificos para futuro 
+ *   Para escrever "BLUELAB"
  //https://maxpromer.github.io/LCD-Character-Creator/
   byte b1[8] = {
   //B0
@@ -164,11 +168,13 @@ byte a4[8]{//A14
 
 
 void setup() {
- pinMode(ledvermPin,OUTPUT); 
- pinMode(laserPin,OUTPUT);
- pinMode(ledverdPin,OUTPUT);
+ pinMode(ledvermPin,OUTPUT); //Inicia o led vermelho como saida
+ pinMode(laserPin,OUTPUT); //Inicia o laser como saida
+ pinMode(ledverdPin,OUTPUT); //Inicia o led verde como saida
  
 /*
+ * Inicializa os caracteres especificos
+ * para serem utilizados no lcd
 lcd.createChar(0, b1);
 lcd.createChar(1, b2);
 lcd.createChar(2, l1);
@@ -186,47 +192,48 @@ lcd.createChar(13, a3);
 lcd.createChar(14, a4);
  */
  
- lcd.begin(16, 2);
+ lcd.begin(16, 2); //Inicializa o lcd de 16x2 e limpa a tela
  lcd.clear();
- //Posiciona o cursor na coluna 5, linha 0;
- lcd.setCursor(4, 0);
- //Envia o texto entre aspas para o LCD
- lcd.print("BLUELAB");
+ 
+ lcd.setCursor(4, 0); //Posiciona o cursor na coluna 5, linha 0;
+ 
+ lcd.print("BLUELAB"); //Envia o texto entre aspas para o LCD
  
  Serial.begin(9600); //Inicia a comunicação serial
 }
  
 void loop() {
- ///ler o valor do LDR
+ ///Le o valor do LDR
  ldrValor = analogRead(ldrPin); //O valor lido será entre 0 e 1023
  
+ //Deixa o laser sempre ligado
  digitalWrite(laserPin,HIGH);
  
   //Porta trancada e fechada
   if(ldrValor>=920){
-      digitalWrite(ledverdPin,LOW);
+      digitalWrite(ledverdPin,LOW); //Led vermelho sempre ligado
       digitalWrite(ledvermPin,HIGH);
-      lcd.setCursor(4, 1);
-      lcd.print("FECHADO");
-      delay(500);
-      rolarPararMeio();
-      Serial.println("A porta esta trancada");
+      lcd.setCursor(4, 1); //Coloca o cursor na coluna 4, linha 1
+      lcd.print("FECHADO"); //Escreve o que está escrito dentro das " "
+      delay(500); //Delay básico pra ficar parado um instante
+      rolarPararMeio(); //TESTE -> desloca o texto para a esquerda até sumir e reaparecer do outro lado e para no meio
+      Serial.println("A porta esta trancada"); //Escreve no monitor serial a mensagem
   }
   
   //Porta fechada e destrancada
   else if (ldrValor<= 770 ){
-    digitalWrite(ledvermPin,HIGH);
+    digitalWrite(ledvermPin,HIGH); //Os 2 leds ligados
     digitalWrite(ledverdPin,HIGH);
-    lcd.setCursor(4, 1);
-    lcd.print("ABERTO ");
-    delay(500);
-    rolarPararMeio();
-    Serial.println("A porta esta fechada");
+    lcd.setCursor(4, 1); //Coloca o cursor na coluna 4, linha 1
+    lcd.print("ABERTO "); //Escreve o que está escrito dentro das " "
+    delay(500); //Delay básico pra ficar parado um instante
+    rolarPararMeio(); //TESTE -> desloca o texto para a esquerda até sumir e reaparecer do outro lado e para no meio
+    Serial.println("A porta esta fechada"); //Escreve no monitor serial a mensagem
   }
   
   //Porta aberta
   else{
-    digitalWrite(ledverdPin,HIGH);
+    digitalWrite(ledverdPin,HIGH); //Led verde ligado
     digitalWrite(ledvermPin,LOW);
     lcd.setCursor(4, 1);
     lcd.print("ABERTO ");
@@ -235,16 +242,18 @@ void loop() {
     Serial.println("A porta esta aberta");
   }
   
- //imprime o valor lido do LDR no monitor serial
+ //Lmprime o valor lido do LDR no monitor serial
  Serial.println(ldrValor);
  delay(100);
 }
 
+//Função em teste para deslocar o texto para a esquerda e parar no meio
 void rolarPararMeio(){
+  //Repetição pra deslocar o numero de posições escolhidas
   for (int posicao = 0; posicao < 23; posicao++){
     
-    lcd.scrollDisplayLeft();
-    delay(250);
+    lcd.scrollDisplayLeft();//Descola o texto para a esquerda
+    delay(250); //Delay para ajustar o tempo total de deslocamento (ATUAL: 5 segundos e uns quebrados, quase 6 segundos)
     
   }
 /*  lcd.setCursor(0,1);
@@ -255,5 +264,5 @@ void rolarPararMeio(){
     
   }*/
   //lcd.setCursor(4,1);
-  delay(1000);
+  delay(1000); //Delay para o texto ficar no meio
 }
