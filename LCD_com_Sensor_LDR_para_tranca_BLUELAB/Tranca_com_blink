@@ -215,8 +215,8 @@ void loop() {
       digitalWrite(ledvermPin,HIGH);
       lcd.setCursor(4, 1); //Coloca o cursor na coluna 4, linha 1
       lcd.print("FECHADO"); //Escreve o que está escrito dentro das " "
-      lcd.blink();
-      delay(500); //Delay básico pra ficar parado um instante
+      delay(2000); //Delay básico pra ficar parado um instante
+      lcd.print("       ");
       Serial.println("A porta esta trancada"); //Escreve no monitor serial a mensagem
   }
   
@@ -226,8 +226,8 @@ void loop() {
     digitalWrite(ledverdPin,HIGH);
     lcd.setCursor(4, 1); //Coloca o cursor na coluna 4, linha 1
     lcd.print("ABERTO "); //Escreve o que está escrito dentro das " "
-    lcd.blink();
-    delay(500); //Delay básico pra ficar parado um instante
+    delay(2000); //Delay básico pra ficar parado um instante
+    lcd.print("       ");
     Serial.println("A porta esta fechada"); //Escreve no monitor serial a mensagem
   }
   
@@ -237,8 +237,8 @@ void loop() {
     digitalWrite(ledvermPin,LOW);
     lcd.setCursor(4, 1);
     lcd.print("ABERTO ");
-    lcd.blink();
-    delay(500);
+    delay(2000);
+    lcd.print("       ");
     Serial.println("A porta esta aberta");
   }
   
