@@ -215,8 +215,9 @@ void loop() {
       digitalWrite(ledvermPin,HIGH);
       lcd.setCursor(4, 1); //Coloca o cursor na coluna 4, linha 1
       lcd.print("FECHADO"); //Escreve o que está escrito dentro das " "
-      delay(2000); //Delay básico pra ficar parado um instante
-      lcd.print("       ");
+      delay(1300); //Delay para ficar aparecendo
+      lcd.print("       "); //Apagar o que está escrito
+      delay(700); //Delay para ficar apagado
       Serial.println("A porta esta trancada"); //Escreve no monitor serial a mensagem
   }
   
@@ -225,9 +226,10 @@ void loop() {
     digitalWrite(ledvermPin,HIGH); //Os 2 leds ligados
     digitalWrite(ledverdPin,HIGH);
     lcd.setCursor(4, 1); //Coloca o cursor na coluna 4, linha 1
-    lcd.print("ABERTO "); //Escreve o que está escrito dentro das " "
-    delay(2000); //Delay básico pra ficar parado um instante
-    lcd.print("       ");
+    lcd.print(" ABERTO"); //Escreve o que está escrito dentro das " "
+    delay(1300); //Delay para ficar aparecendo
+    lcd.print("       "); //Apagar o que está escrito
+    delay(700); //Delay para ficar apagado
     Serial.println("A porta esta fechada"); //Escreve no monitor serial a mensagem
   }
   
@@ -236,13 +238,14 @@ void loop() {
     digitalWrite(ledverdPin,HIGH); //Led verde ligado
     digitalWrite(ledvermPin,LOW);
     lcd.setCursor(4, 1);
-    lcd.print("ABERTO ");
-    delay(2000);
+    lcd.print(" ABERTO");
+    delay(1300);
     lcd.print("       ");
+    delay(700);
     Serial.println("A porta esta aberta");
   }
   
- //Lmprime o valor lido do LDR no monitor serial
+ //Imprime o valor lido do LDR no monitor serial
  Serial.println(ldrValor);
  delay(250);
 }
